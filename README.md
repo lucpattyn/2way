@@ -15,6 +15,15 @@ In one terminal run:
 ./server
 ```
 
-Then navigate to http://quarkshub.com/projects/sockets/fileupload.html in your web browser.
-You should be able to upload a file in chunks through websocket.
+## Dependencies 
+After installing build-essentials, gcc/g++ compiler and cmake,
+do:
+
+```bash
+sudo apt-get install libwebsockets-dev
+sudo apt-get install pkg-config
+```
+
+Then navigate to http://localhost:8000/fileupload.html in your web browser.
+You should be able to upload a file in chunks through websocket if you specify the right ip address in the .js file.
 

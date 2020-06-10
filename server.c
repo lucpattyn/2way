@@ -6,9 +6,22 @@ static int callback_http( struct lws *wsi, enum lws_callback_reasons reason, voi
 {
 	switch( reason )
 	{
+		char* uri;
+		char* ext;
+		const char* mime; 
 		case LWS_CALLBACK_HTTP:
-			lws_serve_http_file( wsi, "example.html", "text/html", NULL, 0 );
+			uri = ((char*) in) + 1;
+			ext = strrchr(uri, '.');
+			printf("requested uri: %s, ext: %s\n", uri, ext);
+			
+			mime = "text/html";
+			if(!strcmp(ext, ".js")){
+				mime = "application/javascript";
+			}
+			lws_serve_http_file( wsi, uri, mime, NULL, 0 );
+
 			break;
+
 		default:
 			break;
 	}
@@ -45,6 +58,7 @@ static int callback_example( struct lws *wsi, enum lws_callback_reasons reason, 
 					file_state = 1;
 				}else if(file_state == 1){
 					fclose(fp);
+					file_state = 0;
 				}
 			
 			} else{
