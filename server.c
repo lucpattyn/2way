@@ -4,15 +4,24 @@
 
 static int callback_http( struct lws *wsi, enum lws_callback_reasons reason, void *user, void *in, size_t len )
 {
+    
 	switch( reason )
 	{
 		char* uri;
 		char* ext;
-		const char* mime; 
+		const char* mime;
+            
+        
 		case LWS_CALLBACK_HTTP:
-			uri = ((char*) in) + 1;
-			ext = strrchr(uri, '.');
-			printf("requested uri: %s, ext: %s\n", uri, ext);
+            uri = (char*) in;
+            if(strlen(uri) < 2){
+                uri = "fileupload.html";
+            }else{
+                uri = uri + 1;
+            }
+            
+            ext = strrchr(uri, '.');
+            printf("requested in: %s, uri: %s, ext: %s\n", in, uri, ext);
 			
 			mime = "text/html";
 			if(!strcmp(ext, ".js")){
